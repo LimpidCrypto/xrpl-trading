@@ -16,10 +16,9 @@ Often times arbitrageurs have prefunded multiple asstets on multiple exchanges t
 ```
 FT = FTxn + FTfr
 ```
-where,
- - F<sub>T</sub>: Total fee
- - F<sub>Txn</sub>: Transaction fee
- - F<sub>Tfr</sub>: Transfer fee
+- F<sub>T</sub>: Total fee
+- F<sub>Txn</sub>: Transaction fee
+- F<sub>Tfr</sub>: Transfer fee
 
 On the XRPL we don't have multiple CeX but one DeX with multiple issuers of tokens. You can trade all tokens against each other. There are no limitations that you couldn't trade `USD:Bitstamp` against `USD:Gatehub` just because the issuers are different.
 
@@ -30,15 +29,17 @@ The flowchart below shows the potentially simplest example of a cross exchange a
 ```mermaid
 flowchart TB
 Head(Profit of 0.2 XRP)
-Alice{Alice:\n10 XRP} --> XRPUSDB[XRP/USD:Bitstamp\n0.50 USD] --> Alice1{Alice:\n5 USD:Bitstamp} --> Alice2{Alice:\n5 USD:Gatehub} --> XRPUSDG[XRP/USD:Gatehub\n0.49 USD] --> Alice3{Alice:\n10.2 XRP}
+Alice{Alice:\n10 XRP\n5 USD:Gatehub} --> XRPUSDB[XRP/USD:Bitstamp\n0.50 USD] --> Alice1{Alice:\n5 USD:Bitstamp\n5 USD:Gatehub} --> XRPUSDG[XRP/USD:Gatehub\n0.49 USD] --> Alice2{Alice:\n10.2 XRP\n5 USD:Bitstamp}
 
 classDef wallet fill:#0003ba;
 classDef buyOrderBook fill:#3e8a2f;
 classDef sellOrderBook fill:#a60202;
 
-class Alice,Alice1,Alice2,Alice3 wallet;
+class Alice,Alice1,Alice2 wallet;
 class XRPUSDB buyOrderBook;
 class XRPUSDG sellOrderBook;
 ```
-
 At the time `Alice` spot's the arbitrage opportunity, she hold's `10 XRP` and `5 USD` from the issuer `Gatehub` (`USD:Gatehub`). She spotted an offer that enables her to trade `10 XRP` at a price of `0.50 USD:Bitstamp` to receive `5 USD:Bitstamp`. She takes that trade because she also spotted an offer that enables hew to trade `5 USD:Gatehub` at a price of `0.49 USD:Gatehub` to receive `10.2 XRP`. After she consumes both offers, Alice still has `5 USD` (just the issuer changed), but now has `10.2 XRP`.
+In this case, Alice whould need to send two `OfferCreate` transactions to consume the offers.
+
+But what if Alice had no `5 USD:Gatehub` funded?
