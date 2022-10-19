@@ -64,7 +64,7 @@ class XRPUSDB buyOrderBook;
 class XRPUSDG sellOrderBook;
 ```
 
-### 1.2 Triangular arbitrage
+#### 1.2 Triangular arbitrage
 This type of arbitrage is similar to the simple type of cross exchange arbitrage. As the name already suggest's, this type trades 3 assets against each other. This type has the advantage that we are monitoring more possibilities to find a profitable arbitrage opportunity.
 Here is a simple example how a triangular opportunity could look like:
 ```mermaid
@@ -77,3 +77,9 @@ classDef orderBook fill:#3e8a2f;
 class Alice,Alice1,Alice2,Alice3 wallet;
 class xrpusd,usdeur,usdeur,eurxrp orderBook;
 ```
+
+### Market making
+
+---
+
+## Usage
