@@ -3,7 +3,7 @@ A trading bot that performs arbitrage and market making on the XRP Ledger
 
 ## Concepts
 1. Arbitrage
-    - 1.1 Cross exchange arbitrage
+    - 1.1 Simple cross exchange arbitrage
     - 1.2 Triangular arbitrage
 2. Market making
 
@@ -11,7 +11,7 @@ A trading bot that performs arbitrage and market making on the XRP Ledger
 Arbitrage trading describes the practice of taking advantage of differences in prices of the same assets in two or more markets.
 In other words you are buying an asset in one market and at the same time you are selling the same asset at a higher price in a second market.
 
-Often times arbitrageurs have prefunded multiple asstets on multiple exchanges to monitor as many possibilities for arbitrage opportunities as possible and to act as fast as possible. Arbitrageurs always have to make sure they've funded their assets they want to trade. If they don't have them funded they have to first buy the asset they want to spend which takes extra time and fees. Using the DeX and path finding of the XRP Ledger we can fund the wished currency, buy an assets and sell that asset all at the same time with just one transaction. So the arbitrage opportunity will be taken super fast and will cost a friction of a cent (in the best case).
+Often times arbitrageurs have prefunded multiple asstets on multiple exchanges to monitor as many possibilities for arbitrage opportunities as possible and to act as fast as possible. Arbitrageurs always have to make sure they've funded their assets they want to trade. If they don't have them funded they have to first buy the asset they want to spend which takes extra time and fees. Using the DeX and path finding of the XRP Ledger we can fund the wished asset, buy an asset and sell that asset all at the same time with just a few transactions that all get validated in the same ledger at the same time. So the arbitrage opportunity will be taken super fast and will cost a friction of a cent (in the best case).
 
 ```
 FT = FTxn + FTfr
@@ -22,7 +22,7 @@ FT = FTxn + FTfr
 
 On the XRPL we don't have multiple CeX but one DeX with multiple issuers of tokens. You can trade all tokens against each other. There are no limitations that you couldn't trade `USD:Bitstamp` against `USD:Gatehub` just because the issuers are different.
 
-#### 1.1 Cross exchange arbitrage
+#### 1.1 Simple cross exchange arbitrage
 This is the simplest type of arbitrage. We have Asset<sub>A</sub>, trade it against Asset<sub>B</sub> and trade Asset<sub>B</sub> for Asset<sub>C</sub>.
 
 The flowchart below shows the potentially simplest example of a cross exchange arbitrage opportunity:
@@ -70,10 +70,12 @@ class XRPUSDG sellOrderBook;
 This type of arbitrage is similar to the simple type of cross exchange arbitrage. As the name already suggest's, this type trades 3 assets against each other. This type has the advantage that we are monitoring more possibilities to find a profitable arbitrage opportunity.
 Here is a simple example how a triangular opportunity could look like:
 ```mermaid
-flowchart LR
-xrpusd[XRP/USD] --> usdeur[USD/EUR]
-usdeur[USD/EUR] --> eurxrp[EUR/XRP]
+flowchart TB
+Alice{Alice:\n10 XRP} --> xrpusd[XRP/USD:Gatehub\n0.50 USD] --> Alice1{Alice:\n5 USD:Gatehub} --> usdeur[USD:Gatehub/EUR:Bitstamp\n1.10 EUR] --> Alice2{Alice:\n5.50 EUR:Bitstamp} --> eurxrp[EUR:Gatehub/XRP\n1.85 XRP] --> Alice3{Alice:\n10.2 XRP}
 
-classDef start fill:#0003ba;
-classDef curr fill:#3e8a2f;
+classDef wallet fill:#0003ba;
+classDef orderBook fill:#3e8a2f;
+
+class Alice,Alice1,Alice2,Alice3 wallet;
+class xrpusd,usdeur,usdeur,eurxrp orderBook;
 ```
