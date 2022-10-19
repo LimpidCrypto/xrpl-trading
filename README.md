@@ -28,7 +28,6 @@ This is the simplest type of arbitrage. We have Asset<sub>A</sub>, trade it agai
 The flowchart below shows the potentially simplest example of a cross exchange arbitrage opportunity:
 ```mermaid
 flowchart TB
-Head(Profit of 0.2 XRP)
 Alice{Alice:\n10 XRP\n5 USD:Gatehub} --> XRPUSDB[XRP/USD:Bitstamp\n0.50 USD] --> Alice1{Alice:\n5 USD:Bitstamp\n5 USD:Gatehub} --> XRPUSDG[XRP/USD:Gatehub\n0.49 USD] --> Alice2{Alice:\n10.2 XRP\n5 USD:Bitstamp}
 
 classDef wallet fill:#0003ba;
@@ -54,7 +53,6 @@ class Alice wallet;
 Alice then looks if there is a payment path available that is efficient enough, so that the arbitrage opportunity is still profitable. If it is the example would look like something like this:
 ```mermaid
 flowchart TB
-Head(Profit of 0.2 XRP)
 Alice3{Alice:\n10 XRP} --> Steps((Multiple path step\nto receive the wished\namount of USD:Gatehub)) --> Alice{Alice:\n10 XRP\n5 USD:Gatehub} --> XRPUSDB[XRP/USD:Bitstamp\n0.50 USD] --> Alice1{Alice:\n5 USD:Bitstamp\n5 USD:Gatehub} --> XRPUSDG[XRP/USD:Gatehub\n0.49 USD] --> Alice2{Alice:\n10.2 XRP\n5 USD:Bitstamp}
 
 classDef wallet fill:#0003ba;
