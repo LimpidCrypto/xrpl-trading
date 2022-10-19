@@ -3,8 +3,8 @@ A trading bot that performs arbitrage and market making on the XRP Ledger
 
 ## Concepts
 1. Arbitrage
-  1.1 Cross exchange arbitrage
-  1.2 Triangular arbitrage
+    - 1.1 Cross exchange arbitrage
+    - 1.2 Triangular arbitrage
 2. Market making
 
 ### 1. Arbitrage
@@ -51,7 +51,7 @@ Alice{Alice:\n10 XRP}
 classDef wallet fill:#0003ba;
 class Alice wallet;
 ```
-Alice now looks if there is a payment path available that is efficient enough, so that the arbitrage opportunity is still profitable. If it is the example would look like something like this:
+Alice then looks if there is a payment path available that is efficient enough, so that the arbitrage opportunity is still profitable. If it is the example would look like something like this:
 ```mermaid
 flowchart TB
 Head(Profit of 0.2 XRP)
@@ -64,4 +64,16 @@ classDef sellOrderBook fill:#a60202;
 class Alice,Alice1,Alice2,Alice3 wallet;
 class XRPUSDB buyOrderBook;
 class XRPUSDG sellOrderBook;
+```
+
+### 1.2 Triangular arbitrage
+This type of arbitrage is similar to the simple type of cross exchange arbitrage. As the name already suggest's, this type trades 3 assets against each other. This type has the advantage that we are monitoring more possibilities to find a profitable arbitrage opportunity.
+Here is a simple example how a triangular opportunity could look like:
+```mermaid
+flowchart LR
+xrpusd[XRP/USD] --> usdeur[USD/EUR]
+usdeur[USD/EUR] --> eurxrp[EUR/XRP]
+
+classDef start fill:#0003ba;
+classDef curr fill:#3e8a2f;
 ```
