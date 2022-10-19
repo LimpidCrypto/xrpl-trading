@@ -24,4 +24,4 @@ where,
 On the XRPL we don't have multiple CeX but one DeX with multiple issuers of tokens. You can trade all tokens against each other. There are no limitations that you couldn't trade `USD:Bitstamp` against `USD:Gatehub` just because the issuers are different.
 
 ### 1.1 Cross exchange arbitrage
-This is the simplest type of arbitrage. We have Asset<sub>A</sub>, trade it against Asset<sub>B</sub> and trade Asset<sub>B</sub> against Asset<sub>C</sub>.
+This is the simplest type of arbitrage. We have Asset<sub>A</sub>, trade it against Asset<sub>B</sub> and trade Asset<sub>B</sub> for Asset<sub>C</sub>.
