@@ -42,4 +42,26 @@ class XRPUSDG sellOrderBook;
 At the time `Alice` spot's the arbitrage opportunity, she hold's `10 XRP` and `5 USD` from the issuer `Gatehub` (`USD:Gatehub`). She spotted an offer that enables her to trade `10 XRP` at a price of `0.50 USD:Bitstamp` to receive `5 USD:Bitstamp`. She takes that trade because she also spotted an offer that enables hew to trade `5 USD:Gatehub` at a price of `0.49 USD:Gatehub` to receive `10.2 XRP`. After she consumes both offers, Alice still has `5 USD` (just the issuer changed), but now has `10.2 XRP`.
 In this case, Alice whould need to send two `OfferCreate` transactions to consume the offers.
 
-But what if Alice had no `5 USD:Gatehub` funded?
+But what if Alice spotted the exact same arbitrage opportunity but had no `5 USD:Gatehub` funded?
+According to this situation Alice's wallet would look like this:
+```mermaid
+flowchart TB
+Alice{Alice:\n10 XRP}
+
+classDef wallet fill:#0003ba;
+class Alice wallet;
+```
+Alice now looks if there is a payment path available that is efficient enough, so that the arbitrage opportunity is still profitable. If it is the example would look like something like this:
+```mermaid
+flowchart TB
+Head(Profit of 0.2 XRP)
+Alice3{Alice:\n10 XRP} --> Steps((Multiple path step\nto receive the wished\namount of USD:Gatehub)) --> Alice{Alice:\n10 XRP\n5 USD:Gatehub} --> XRPUSDB[XRP/USD:Bitstamp\n0.50 USD] --> Alice1{Alice:\n5 USD:Bitstamp\n5 USD:Gatehub} --> XRPUSDG[XRP/USD:Gatehub\n0.49 USD] --> Alice2{Alice:\n10.2 XRP\n5 USD:Bitstamp}
+
+classDef wallet fill:#0003ba;
+classDef buyOrderBook fill:#3e8a2f;
+classDef sellOrderBook fill:#a60202;
+
+class Alice,Alice1,Alice2,Alice3 wallet;
+class XRPUSDB buyOrderBook;
+class XRPUSDG sellOrderBook;
+```
