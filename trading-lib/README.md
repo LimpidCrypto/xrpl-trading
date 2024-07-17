@@ -1,0 +1,1 @@
+A library providing utilities for arbitrage trading and market making.

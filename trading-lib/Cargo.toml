@@ -1,0 +1,30 @@
+[package]
+name = "trading-lib"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.86"
+rust_decimal = "1.35.0"
+thiserror = "1.0.62"
+
+[dependencies.xrpl-rust]
+git = "https://github.com/sephynox/xrpl-rust.git"
+branch = "dev"
+optional = true
+
+[dev-dependencies]
+rand = "0.8.5"
+
+[features]
+default = ["arbitrage", "market-maker", "xrpl"]
+xrpl = ["xrpl-rust", "automated-market-maker"]
+arbitrage = []
+market-maker = []
+automated-market-maker = []
+
+[[test]]
+name = "unit_tests"
+path = "tests/unit/mod.rs"
