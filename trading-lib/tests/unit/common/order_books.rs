@@ -41,7 +41,7 @@ fn generate_orders<'a>(
 fn generate_order_books_with_same_currency_codes<'a>(
     num: usize,
     num_orders: usize,
-) -> Vec<OrderBook<'a>> {
+) -> Cow<'a, [OrderBook<'a>]> {
     let base_currency_code = generate_random_currency_code();
     let counter_currency_code = generate_random_currency_code();
     let mut order_books = Vec::new();
@@ -57,8 +57,8 @@ fn generate_order_books_with_same_currency_codes<'a>(
         let mut order_book = OrderBook {
             base: base_currency,
             counter: counter_currency,
-            bids: (bids, OrderBookSideType::Bids).into(),
-            asks: (asks, OrderBookSideType::Asks).into(),
+            bids: (bids.to_owned().into(), OrderBookSideType::Bids).into(),
+            asks: (asks.to_owned().into(), OrderBookSideType::Asks).into(),
         };
         if rand::random() {
             order_book.flip();
@@ -66,7 +66,7 @@ fn generate_order_books_with_same_currency_codes<'a>(
         order_books.push(order_book);
     }
 
-    order_books
+    order_books.into()
 }
 
 pub fn generate_order_books<'a>(
@@ -77,11 +77,11 @@ pub fn generate_order_books<'a>(
     for _ in 0..num_currency_pairs {
         let order_books_with_same_currency_codes =
             generate_order_books_with_same_currency_codes(num_order_books_per_currency_pair, 10);
-        order_books.extend(order_books_with_same_currency_codes);
+        order_books.extend(order_books_with_same_currency_codes.to_vec());
     }
 
     OrderBooks {
-        order_books,
+        order_books: order_books.into(),
         liquidity_spread: 0.1,
     }
 }

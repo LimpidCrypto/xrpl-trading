@@ -101,10 +101,10 @@ impl<'a> TryFrom<(&mut OrderBook<'a>, &mut OrderBook<'a>, Cow<'a, str>)> for Swa
             // *Order Book 2*: XRP/USD:Bitstamp <br>
             // *Consuming Bid of XRP/USD:GateHub*: XRP -> USD:GateHub (sell XRP) <br>
             // *Consuming Ask of XRP/USD:Bitstamp*: USD:Bitstamp -> XRP (buy XRP)
-            let mut buy_order = buy_order_book.asks.orders[0].clone();
+            let mut buy_order = buy_order_book.get_asks()?.orders[0].clone();
             buy_order.flip();
             Ok(SwapTrade {
-                sell_order: sell_order_book.bids.orders[0].clone(),
+                sell_order: sell_order_book.get_bids()?.orders[0].clone(),
                 buy_order,
                 starting_currency: sell_order_book.base.clone(),
             })
@@ -120,11 +120,11 @@ impl<'a> TryFrom<(&mut OrderBook<'a>, &mut OrderBook<'a>, Cow<'a, str>)> for Swa
             // *Order Book 2*: XRP/USD:Bitstamp <br>
             // *Consuming Ask of XRP/USD:GateHub*: USD:GateHub -> XRP (sell USD) <br>
             // *Consuming Bid of XRP/USD:Bitstamp*: XRP -> USD:Bitstamp (buy USD)
-            let mut sell_order = sell_order_book.asks.orders[0].clone();
+            let mut sell_order = sell_order_book.get_asks()?.orders[0].clone();
             sell_order.flip();
             Ok(SwapTrade {
                 sell_order,
-                buy_order: buy_order_book.bids.orders[0].clone(),
+                buy_order: buy_order_book.get_bids()?.orders[0].clone(),
                 starting_currency: sell_order_book.counter.clone(),
             })
         } else if sell_order_book
@@ -142,8 +142,8 @@ impl<'a> TryFrom<(&mut OrderBook<'a>, &mut OrderBook<'a>, Cow<'a, str>)> for Swa
             // *Consuming Bid of XRP/USD:GateHub*: XRP -> USD:GateHub (sell XRP) <br>
             // *Consuming Bid of USD:Bitstamp/XRP*: USD:Bitstamp -> XRP (buy XRP)
             Ok(SwapTrade {
-                sell_order: sell_order_book.bids.orders[0].clone(),
-                buy_order: buy_order_book.bids.orders[0].clone(),
+                sell_order: sell_order_book.get_bids()?.orders[0].clone(),
+                buy_order: buy_order_book.get_bids()?.orders[0].clone(),
                 starting_currency: sell_order_book.base.clone(),
             })
         } else if sell_order_book
@@ -160,9 +160,9 @@ impl<'a> TryFrom<(&mut OrderBook<'a>, &mut OrderBook<'a>, Cow<'a, str>)> for Swa
             // *Order Book 2*: USD:Bitstamp/XRP <br>
             // *Consuming Ask of XRP/USD:GateHub*: USD:GateHub -> XRP (sell USD) <br>
             // *Consuming Ask of USD:Bitstamp/XRP*: XRP -> USD:Bitstamp (buy USD)
-            let mut sell_order = sell_order_book.asks.orders[0].clone();
+            let mut sell_order = sell_order_book.get_asks()?.orders[0].clone();
             sell_order.flip();
-            let mut buy_order = buy_order_book.asks.orders[0].clone();
+            let mut buy_order = buy_order_book.get_asks()?.orders[0].clone();
             buy_order.flip();
             Ok(SwapTrade {
                 sell_order,

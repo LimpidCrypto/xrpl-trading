@@ -1,5 +1,6 @@
 use std::{cmp::Ordering, mem::swap};
 
+use anyhow::Result;
 use rust_decimal::{prelude::FromPrimitive, Decimal};
 #[cfg(feature = "xrpl")]
 use xrpl::models::{
@@ -22,11 +23,13 @@ pub struct Order<'a> {
     pub rate: Decimal,
 }
 
-impl Flip for Order<'_> {
-    fn flip(&mut self) {
+impl<'a> Flip<'a> for Order<'a> {
+    fn flip(&'a mut self) -> Result<()> {
         self.rate = Decimal::from(1) / self.rate;
         self.base_quantity = self.base_quantity * self.rate;
         swap(&mut self.base, &mut self.counter);
+
+        Ok(())
     }
 }
 
